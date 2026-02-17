@@ -17,9 +17,24 @@
         return null;
     }
 
+    public bool isSameDateHall(Event e)
+    {
+        for (int i = 0; i < EventCounter; i++)
+        {
+            if (Events[i].Date == e.Date && Events[i].HallNumber == e.HallNumber)
+            {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
     public bool Add(Event newEvent)
     {
-        if (EventCounter < Events.Length && FindEventById(newEvent.Id) == null)
+        if (EventCounter < Events.Length 
+            && FindEventById(newEvent.Id) == null
+            && !isSameDateHall(newEvent))
         {
             Events[EventCounter] = newEvent;
             EventCounter++;
@@ -97,7 +112,10 @@
                 break;
             }
         }
-        Console.WriteLine("Події відсортовано за ID.");
+        if (EventCounter != 0)
+        {
+            Console.WriteLine("Події відсортовано за ID.");
+        }       
     }
 
     public string AllEventReport()

@@ -12,7 +12,18 @@
             string choice = Console.ReadLine();
             if (choice == "1")
             {
-                ConsoleGUI.AddEvent(appState);
+                try
+                {
+                    ConsoleGUI.AddEvent(appState);
+                }
+                catch (FormatException ex)
+                {
+                    Console.WriteLine("Притримуйтесь формату вводу.");
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine("Виникла помилка.");
+                }
             }
             else if (choice == "2")
             {
@@ -20,15 +31,57 @@
             }
             else if (choice == "3")
             {
-                ConsoleGUI.ChangeEventStatus(appState);
+                try
+                {
+                    ConsoleGUI.ChangeEventStatus(appState);
+                    Console.WriteLine("Статус успішно змінено!");
+                }
+                catch (FormatException ex)
+                {
+                    Console.WriteLine("Введіть числове значення.");
+                }
+                catch (WrongChoiceException ex)
+                {
+                    Console.WriteLine(ex.Message);
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine("Виникла помилка.");
+                }
             }
             else if (choice == "4")
             {
-                ConsoleGUI.SearchEventById(appState);
+                try
+                {
+                    ConsoleGUI.SearchEventById(appState);
+                }
+                catch (FormatException ex)
+                {
+                    Console.WriteLine("Введіть числове значення.");
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine("Виникла помилка.");
+                }             
             }
             else if (choice == "5")
             {
-                ConsoleGUI.SortEventsByStatus(appState);
+                try
+                {
+                    ConsoleGUI.SortEventsByStatus(appState);
+                }
+                catch (FormatException ex)
+                {
+                    Console.WriteLine("Оберіть одне з запропонованих значень.");
+                }
+                catch (WrongChoiceException ex)
+                {
+                    Console.WriteLine(ex.Message);
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine("Виникла помилка.");
+                }
             }
             else if (choice == "6")
             {
@@ -37,15 +90,52 @@
             }
             else if (choice == "7")
             {
-                ConsoleGUI.SellTicketFromConsole(appState);
+                try
+                {
+                    ConsoleGUI.SellTicketFromConsole(appState);
+                }
+                catch (FormatException ex)
+                {
+                    Console.WriteLine("Введіть числове значення.");
+                }
+                catch (WrongChoiceException ex)
+                {
+                    Console.WriteLine(ex.Message);
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine("Виникла помилка.");
+                }
             }
             else if (choice == "8")
             {
-                ConsoleGUI.ReturnTicketFromConsole(appState);
+                try
+                {
+                    ConsoleGUI.ReturnTicketFromConsole(appState);
+                }
+                catch (FormatException ex)
+                {
+                    Console.WriteLine("Введіть числове значення.");
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine("Виникла помилка.");
+                }
             }
             else if (choice == "9")
             {
-                ConsoleGUI.ShowEventReport(appState);
+                try
+                {
+                    ConsoleGUI.ShowEventReport(appState);
+                }
+                catch (FormatException ex)
+                {
+                    Console.WriteLine("Введіть числове значення.");
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine("Виникла помилка.");
+                }
             }
             else if (choice == "10")
             {

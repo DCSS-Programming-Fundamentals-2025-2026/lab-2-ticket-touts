@@ -1,5 +1,38 @@
 ﻿public static class ConsoleGUI
 {
+    public static bool DateFormatCheck(string date)
+    {
+        if (date.Length != 10)
+        {
+            return false;
+        }
+        
+        if (date[2] != '.' || date[5] != '.')
+        {
+            return false;
+        }
+        
+        for (int i = 0; i < 10; i++)
+        {
+            if (i != 2 && i != 5 && !int.TryParse(date[i].ToString(), out _))
+            {
+                return false;
+            }
+        }
+             
+        int day = int.Parse(date[0].ToString()) * 10 + int.Parse(date[1].ToString());
+        int month = int.Parse(date[3].ToString()) * 10 + int.Parse(date[4].ToString());
+        int year = int.Parse(date[6].ToString()) * 1000 + int.Parse(date[7].ToString()) * 100;
+        year += int.Parse(date[8].ToString()) * 10 + int.Parse(date[9].ToString());
+
+        if (day < 1 || day > 31 || month < 1 || month > 12 || year < 1000)
+        {
+            return false;
+        }
+
+        return true;
+    }
+
     public static void AddEvent(AppState appState)
     {
         Console.Write("Введіть числове ID: ");
@@ -12,6 +45,11 @@
         int hall = int.Parse(Console.ReadLine());
         Console.Write("Введіть дату проведення події(дд.мм.рррр): ");
         string date = Console.ReadLine();
+        if (!DateFormatCheck(date))
+        {
+            throw new FormatException();
+        }
+
         Console.Write("Введіть ціну на квитки: ");
         double price = double.Parse(Console.ReadLine());
 
@@ -24,7 +62,7 @@
         else
         {
             Console.WriteLine("Не вдалося додати подію.");
-            Console.WriteLine("Можливо подія з таким ID вже існує.");
+            Console.WriteLine("Можливо подія з таким ID вже існує або вказана зала зайнята у зазначену дату.");
         }
     }
 
@@ -46,6 +84,11 @@
             Console.Write("Ваш вибір: ");
 
             int newStatus = int.Parse(Console.ReadLine());
+            if (newStatus < 1 || newStatus > 4)
+            {
+                throw new WrongChoiceException();              
+            }
+
             temp.EventStatusChange(newStatus);
         }
         else
@@ -81,12 +124,23 @@
         Console.Write("Ваш вибір: ");
 
         int status = int.Parse(Console.ReadLine());
+        if (status < 1 || status > 4)
+        {
+            throw new WrongChoiceException();
+        }
+
         Console.WriteLine(appState.Events.SortByStatus(status));
     }
 
     public static void SellTicketFromConsole(AppState appState)
     {
         Console.WriteLine(appState.Events.PrintAll(1));
+        
+        if (appState.Events.EventCounter == 0)
+        {
+            return;
+        }
+
         Console.Write("Введіть ID події, на яку хочете придбати квиток: ");
         int eventId = int.Parse(Console.ReadLine());
 
@@ -104,6 +158,10 @@
             int id = int.Parse(Console.ReadLine());
             Console.Write("Введіть тип квитка (1 - Звичайний, 2 - Дитячий, 3 - Пільговий, 4-VIP): ");
             int type = int.Parse(Console.ReadLine());
+            if (type < 1 || type > 4)
+            {
+                throw new WrongChoiceException();
+            }
 
             Console.WriteLine("Схема залу:");
             for (int i = 0; i < 9; i++)
@@ -117,6 +175,10 @@
             }
             Console.Write("Введіть номер місця: ");
             int place = int.Parse(Console.ReadLine());
+            if (place < 11 || place > 99 || place % 10 == 0)
+            {
+                throw new WrongChoiceException();
+            }
 
             Ticket newTicket;
 
@@ -159,6 +221,12 @@
     public static void ReturnTicketFromConsole(AppState appState)
     {
         Console.WriteLine(appState.Events.PrintAll(2));
+
+        if (appState.Events.EventCounter == 0)
+        {
+            return;
+        }
+
         Console.Write("Введіть ID події, квиток на яку хочете повернути: ");
         int eventId = int.Parse(Console.ReadLine());
 
