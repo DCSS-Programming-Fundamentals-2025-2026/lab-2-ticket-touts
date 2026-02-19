@@ -201,8 +201,8 @@ public class EventRepositoryTests
         string result = repo.SortByStatus(4);
 
         // ASSERT
-        Assert.That(result, Is.EqualTo("ID події: 2 | Статус: Cancelled | " +
-            $"Концерт: Event B | Виконавець: Artist B | " +
-            $"Зала: 2 | Дата: 22.04.2026\n"));
+        Assert.That(result, Is.EqualTo("ID РїРѕРґС–С—: 2 | РЎС‚Р°С‚СѓСЃ: Cancelled | " +
+            $"РљРѕРЅС†РµСЂС‚: Event B | Р’РёРєРѕРЅР°РІРµС†СЊ: Artist B | " +
+            $"Р—Р°Р»Р°: 2 | Р”Р°С‚Р°: 22.04.2026\n"));
     }
 }
