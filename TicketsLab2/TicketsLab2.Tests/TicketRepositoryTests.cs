@@ -78,4 +78,75 @@ public class TicketRepositoryTests
         // ASSERT
         Assert.That(sum, Is.EqualTo(300));
     }
+
+    [Test]
+    public void DifferentTicketsPriceChecking()
+    {
+        // ARRANGE
+        ChildTicket childTicket = new ChildTicket(1, 1, 23, 240);
+        PreferentialTicket preferentialTicket = new PreferentialTicket(2, 1, 73, 240);
+
+        // ACT
+        double childPrice = childTicket.BasePrice;
+        double preferrentialPrice = preferentialTicket.BasePrice;
+
+        // ASSERT
+        Assert.That(childPrice, Is.EqualTo(240 * 0.8));
+        Assert.That(preferrentialPrice, Is.EqualTo(240 * 0.6));
+    }
+
+    [Test]
+    public void ImpossibleSellChecking()
+    {
+        // ARRANGE
+        TicketRepository repo = new TicketRepository();
+        repo.AvailableTickets = 0;
+
+        // ACT
+        bool check = repo.IsSellPossible();
+
+        // ASSERT
+        Assert.That(check, Is.False);
+    }
+
+
+    [Test]
+    public void NoTicketWithIdChecking()
+    {
+        // ARRANGE
+        TicketRepository repo = new TicketRepository();
+        Ticket t1 = new RegularTicket(1, 2, 23, 100);
+        Ticket t2 = new RegularTicket(3, 2, 78, 100);
+        Ticket t3 = new RegularTicket(4, 2, 99, 100);
+
+        repo.SellTicket(t1);
+        repo.SellTicket(t2);
+        repo.SellTicket(t3);
+
+        // ACT
+        Ticket founded = repo.FindTicketById(2);
+
+        // ASSERT
+        Assert.That(founded, Is.Null);
+    }
+
+    [Test]
+    public void FindTicketIndexChecking()
+    {
+        // ARRANGE
+        TicketRepository repo = new TicketRepository();
+        Ticket t1 = new RegularTicket(1, 2, 23, 100);
+        Ticket t2 = new RegularTicket(3, 2, 78, 100);
+        Ticket t3 = new RegularTicket(4, 2, 99, 100);
+
+        repo.SellTicket(t1);
+        repo.SellTicket(t2);
+        repo.SellTicket(t3);
+
+        // ACT
+        int index = repo.FindTicketIndex(3);
+
+        // ASSERT
+        Assert.That(index, Is.EqualTo(1));
+    }
 }
