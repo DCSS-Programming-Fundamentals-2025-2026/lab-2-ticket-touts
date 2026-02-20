@@ -15,6 +15,7 @@
         Console.WriteLine("8) Повернути квиток");
         Console.WriteLine("9) Сформувати фінзвіт по події");
         Console.WriteLine("10) Сформувати загальний фінзвіт");
+        Console.WriteLine("11) Статистика");
 
         Console.WriteLine();
         Console.Write("Оберіть пункт меню: ");
