@@ -1,4 +1,4 @@
-﻿public abstract class Ticket : IReceiptLine
+﻿public abstract class Ticket : IReceiptLine, IComparable
 {
     public int Id { get; set; }
     public int EventId { get; set; }
